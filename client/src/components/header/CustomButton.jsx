@@ -1,6 +1,6 @@
 import { Box, Button, styled } from "@mui/material";
-import { useState} from "react";
-
+import { useState,useContext} from "react";
+import {DataContext} from '../context/DataProvider'
 import LoginDialog from "./LoginDialog";
 
 import Profile from "./Profile";
@@ -29,21 +29,30 @@ const LoginButton = styled(Button)`
 
 const CustomButton = () => {
   const [open, setOpen] = useState(false);
-  //const { account, setAccount } = useContext(DataContext);
-  const openDialog = () => {
+  const [userType,setUserType]=useState("");
+  const { account,setAccount } = useContext(DataContext);
+  const openUserDialog = () => {
+    
+    setUserType("User");
     setOpen(true);
+  };
+
+  const openAdminDialog = () => {
+    setUserType("Admin");
+    setOpen(true);
+
   };
 
   return (
     <Wapper>
-      {false ? (
-        <Profile  />
+      {account ? (
+        <Profile account={account}  setAccount={setAccount} userType={userType} />
       ) : (
         <Box>
-          <LoginButton variant="contained" onClick={() => openDialog()}  style={{marginRight:"10px"}} >
+          <LoginButton variant="contained" onClick={() => openUserDialog()}  style={{marginRight:"10px"}} >
          User Login
         </LoginButton>
-         <LoginButton variant="contained" onClick={() => openDialog()}>
+         <LoginButton variant="contained" onClick={() => openAdminDialog()}>
          Admin Login
         </LoginButton>
         </Box>

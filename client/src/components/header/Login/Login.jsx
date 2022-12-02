@@ -1,26 +1,8 @@
-import React, { useState } from "react";
-import {Typography, Button,Box,styled } from "@mui/material";
+import React, { useState,useContext } from "react";
+import {Typography,Box,styled } from "@mui/material";
 import { Link,useNavigate } from "react-router-dom";
-const Login = () => {
-  const intialState = {
-    email: "",
-    password: "",
-  };
-  const [login, setlogin] = useState(intialState);
-  const [error,setError]=useState({color: "red",visibility:"hidden" });
-
-
-  const inputHandler = (e) => {
-    setError({color: "red",visibility:"hidden"});
-    setlogin({ ...login, [e.target.name]: e.target.value });
-  };
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    console.log(login);
-  };
-
-  const Container=styled(Box)`
+import {DataContext} from   '../../context/DataProvider'
+const Container=styled(Box)`
      margin:10%;
      text-align: center;
      width: auto;
@@ -49,6 +31,32 @@ const Input=styled("input")({
     borderRadius: "5px",
     fontSize: "medium"
 })
+
+
+const Login = (props) => {
+    const {account,setAccount}=useContext(DataContext);
+    const {setOpen}=props;
+  const intialState = {
+    email: "",
+    password: "",
+  };
+  const [login, setlogin] = useState(intialState);
+  const [error,setError]=useState({color: "red",visibility:"hidden" });
+
+
+  const inputHandler = (e) => {
+    setError({color: "red",visibility:"hidden"});
+    setlogin({ ...login, [e.target.name]: e.target.value });
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+      setAccount(login.email);
+    console.log(login);
+    setOpen(false);
+  };
+
+  
   return (
     <Container>
       <InnerContainer >

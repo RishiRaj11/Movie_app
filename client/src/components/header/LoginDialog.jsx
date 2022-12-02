@@ -11,7 +11,7 @@ const LoginDialog = ({open,setOpen}) => {
   return (
     <Dialog  open={open} onClose={closeDialog} >
       <Card variant="outlined"  style={{backgroundColor:" rgb(29, 69, 107)"}}>
-      <Login />
+      <Login setOpen={setOpen} />
       </Card>
       
     </Dialog>

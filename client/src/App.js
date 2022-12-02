@@ -1,11 +1,11 @@
 import React from 'react'
 import Header from './components/header/Header';
-
+import DataProvider from './components/context/DataProvider';
 const App = () => {
   return (
-    <div>
+    <DataProvider>
       <Header />
-    </div>
+    </DataProvider>
   )
 }
 

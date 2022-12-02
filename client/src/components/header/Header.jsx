@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box,AppBar,Toolbar,Typography} from  '@mui/material';
+import {Box,AppBar,Toolbar} from  '@mui/material';
 import {Theaters} from '@mui/icons-material';
 import  Search  from './Search'
 import CustomButton from './CustomButton';
