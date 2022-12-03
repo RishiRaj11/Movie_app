@@ -1,73 +1,78 @@
-import React, { useState,useContext } from "react";
-import {Typography,Box,styled } from "@mui/material";
-import {DataContext} from   '../../context/DataProvider'
-const Container=styled(Box)`
-     margin:10%;
-     text-align: center;
-     width: auto;
-     height:auto;        
-  `;
-  const InnerContainer=styled(Box)`
+import React, { useState, useContext } from "react";
+import axios from 'axios';
+import { Typography, Box, styled } from "@mui/material";
+import { DataContext } from "../../context/DataProvider";
+const Container = styled(Box)`
+  margin: 10%;
+  text-align: center;
+  width: auto;
+  height: auto;
+`;
+const InnerContainer = styled(Box)`
   width: auto;
   height: auto;
   border-radius: 10px;
-  `
-const DivBox=styled(Box)`
-padding: 1px;
+`;
+const DivBox = styled(Box)`
+  padding: 1px;
 `;
 
-const StyledButton=styled("button")({
-    padding:"4px",
-    borderRadius: "5px",
-    fontSize: "medium",
-    border: "none"
-})
+const StyledButton = styled("button")({
+  padding: "4px",
+  borderRadius: "5px",
+  fontSize: "medium",
+  border: "none",
+});
 
-
-
-const Input=styled("input")({
-    padding:"4px",
-    borderRadius: "5px",
-    fontSize: "medium"
-})
-
+const Input = styled("input")({
+  padding: "4px",
+  borderRadius: "5px",
+  fontSize: "medium",
+});
 
 const SignUp = (props) => {
-    const {setAccount}=useContext(DataContext);
-    const {setOpen,setLoginSignup}=props;
+  const {account, setAccount } = useContext(DataContext);
+  const { setOpen, setLoginSignup } = props;
   const intialState = {
-    name:"",
+    name: "",
     email: "",
     password: "",
-    cpassword:""
+    cpassword: ""
+    
   };
-  const [login, setlogin] = useState(intialState);
-  const [error,setError]=useState({color: "red",visibility:"hidden" });
-
+  const [signup, setSignup] = useState({...account,...intialState});
+  const [error, setError] = useState({ color: "red", visibility: "hidden" });
 
   const inputHandler = (e) => {
-    setError({color: "red",visibility:"hidden"});
-    setlogin({ ...login, [e.target.name]: e.target.value });
+    setError({ color: "red", visibility: "hidden" });
+    setSignup({ ...signup, [e.target.name]: e.target.value });
   };
 
-  const signupHandler=()=>{
+  const signupHandler = () => {
     setLoginSignup(true);
-  }
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-      setAccount(login.email);
-    console.log(login);
-    setOpen(false);
+
+    if (signup.password !== signup.cpassword) {
+      setError({ color: "red", visibility: "visible" });
+    } else {
+      setAccount({...signup});
+      console.log(signup);
+      console.log(account);
+      const response =await axios.post("http://localhost:5000/signup",signup);
+      console.log(response);
+      setOpen(false);
+    }
   };
 
-  
   return (
     <Container>
-      <InnerContainer >
-        <h3 style={{color:"white"}}>SignUp</h3>
+      <InnerContainer>
+        <h3 style={{ color: "white" }}>SignUp</h3>
         <form onSubmit={submitHandler}>
-        <DivBox >
+          <DivBox>
             <Input
               type="text"
               placeholder="Name"
@@ -75,11 +80,10 @@ const SignUp = (props) => {
               onChange={inputHandler}
               minLength="3"
               maxLength="64"
-              
             />
           </DivBox>
 
-          <DivBox >
+          <DivBox>
             <Input
               type="email"
               placeholder="email"
@@ -91,7 +95,7 @@ const SignUp = (props) => {
             />
           </DivBox>
 
-          <DivBox >
+          <DivBox>
             <Input
               type="password"
               placeholder="password"
@@ -100,7 +104,7 @@ const SignUp = (props) => {
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             />
           </DivBox>
-          <DivBox >
+          <DivBox>
             <Input
               type="password"
               placeholder=" conform password"
@@ -110,15 +114,16 @@ const SignUp = (props) => {
             />
           </DivBox>
 
-          <DivBox >
+          <DivBox>
             <StyledButton type="submit">LogIn</StyledButton>
-            <Typography style={{color:"white"}}>
-              Don't have an account ? please{" "} <span style={{cursor:"pointer"}}onClick={signupHandler} >Login</span>
+            <Typography style={{ color: "white" }}>
+              Don't have an account ? please{" "}
+              <span style={{ cursor: "pointer" }} onClick={signupHandler}>
+                Login
+              </span>
             </Typography>
           </DivBox>
-          <span style={error} >
-            Error : account doesn't exist
-          </span>
+          <span style={error}>Error :password didn't match</span>
         </form>
       </InnerContainer>
     </Container>

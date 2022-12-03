@@ -34,13 +34,15 @@ const Input=styled("input")({
 
 
 const Login = (props) => {
-    const {setAccount}=useContext(DataContext);
+    const {account,setAccount}=useContext(DataContext);
     const {setOpen,setLoginSignup}=props;
   const intialState = {
     email: "",
-    password: "",
+    password: ""
+    
+    
   };
-  const [login, setlogin] = useState(intialState);
+  const [login, setlogin] = useState({...account,...intialState});
   const [error,setError]=useState({color: "red",visibility:"hidden" });
 
 
@@ -55,7 +57,7 @@ const Login = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-      setAccount(login.email);
+      setAccount({...login});
     console.log(login);
     setOpen(false);
   };

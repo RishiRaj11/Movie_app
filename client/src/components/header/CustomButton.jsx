@@ -29,24 +29,26 @@ const LoginButton = styled(Button)`
 
 const CustomButton = () => {
   const [open, setOpen] = useState(false);
-  const [userType,setUserType]=useState("");
+  //const [userType,setUserType]=useState("");
   const { account,setAccount } = useContext(DataContext);
   const openUserDialog = () => {
     
-    setUserType("User");
+   // setUserType("User");
+   setAccount({...account,userType:"User"})
     setOpen(true);
   };
 
   const openAdminDialog = () => {
-    setUserType("Admin");
+    setAccount({...account,userType:"Admin"})
+   // setUserType("Admin");
     setOpen(true);
 
   };
 
   return (
     <Wapper>
-      {account ? (
-        <Profile account={account}  setAccount={setAccount} userType={userType} />
+      {account.email ? (
+        <Profile account={account}  setAccount={setAccount} userType={account.userType} />
       ) : (
         <Box>
           <LoginButton variant="contained" onClick={() => openUserDialog()}  style={{marginRight:"10px"}} >

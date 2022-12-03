@@ -9,7 +9,7 @@ const Logout = styled(Typography)`
   font-size: 14px;
   margin-left: 20px;
 `;
-const Profile = ({account,setAccount,userType}) => {
+const Profile = ({account,setAccount}) => {
   
   const [open, setOpen] = useState(false);
 
@@ -32,9 +32,9 @@ const Profile = ({account,setAccount,userType}) => {
           onClick={handleClick}
           style={{ marginTop: 2, cursor: "pointer" }}
         >
-          {account}
+          {account.email}
         </Typography>
-        <Typography style={{paddingLeft:"20px"}} >{userType}</Typography>
+        <Typography style={{paddingLeft:"20px"}} >{account.userType}</Typography>
       </Box>
       <MenuContainer anchorEl={open} open={Boolean(open)} onClose={handleClose}>
         <MenuItem

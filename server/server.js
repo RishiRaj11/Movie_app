@@ -1,9 +1,11 @@
 import express from "express";
 import connection from "./dbconnection.js";
+import cors from 'cors'
 import router from "./routes/route.js";
 const app = express();
-
-
+//middleware
+app.use(cors());
+app.use(express.json());
 app.use("/",router);
 
 const PORT = 5000;
