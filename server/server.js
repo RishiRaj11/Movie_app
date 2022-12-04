@@ -2,6 +2,7 @@ import express from "express";
 import connection from "./dbconnection.js";
 import cors from 'cors'
 import router from "./routes/route.js";
+//import defaultData from "./default.js";
 const app = express();
 //middleware
 app.use(cors());
@@ -15,3 +16,4 @@ connection(URL);
 app.listen(PORT, () => {
   console.log("Listening at port  5000");
 });
+//defaultData();

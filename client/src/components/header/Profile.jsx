@@ -1,6 +1,8 @@
 import { Typography, Box, Menu, MenuItem, styled } from "@mui/material";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
+
 const MenuContainer = styled(Menu)`
   margin-top: 5px;
 `;
@@ -10,6 +12,8 @@ const Logout = styled(Typography)`
   margin-left: 20px;
 `;
 const Profile = ({account,setAccount}) => {
+     const navigate=useNavigate();
+ 
   
   const [open, setOpen] = useState(false);
 
@@ -22,7 +26,9 @@ const Profile = ({account,setAccount}) => {
   };
 
   const logout = () => {
+    navigate("/");
     setAccount("");
+
   };
 
   return (
