@@ -2,7 +2,7 @@ import { Box, Button, styled } from "@mui/material";
 import { useState,useContext} from "react";
 import {DataContext} from '../context/DataProvider'
 import LoginDialog from "./LoginDialog";
-import { useNavigate } from "react-router-dom";
+
 import Profile from "./Profile";
 const Wapper = styled(Box)`
   display: flex;
@@ -28,15 +28,15 @@ const LoginButton = styled(Button)`
 `;
 
 const CustomButton = () => {
-  const navigate=useNavigate();
+ 
   const [open, setOpen] = useState(false);
   //const [userType,setUserType]=useState("");
   const { account,setAccount } = useContext(DataContext);
   const openUserDialog = () => {
     
    // setUserType("User");
-   setAccount({...account,userType:"User"})
-   navigate("/user/login");
+   setAccount({userType:"User"})
+   //navigate("/user/login");
   //  if(account.userType==="User" && account.email){
   //   navigate("/user/login");
   //  }
@@ -45,9 +45,9 @@ const CustomButton = () => {
   };
 
   const openAdminDialog = () => {
-    setAccount({...account,userType:"Admin"})
+    setAccount({userType:"Admin"})
    // setUserType("Admin");
-   navigate("/admin/login");
+   //navigate("/admin/login");
       //  if(account.userType==="Admin" && account.email){
       //   navigate("/admin/login");
       //  }
@@ -60,6 +60,7 @@ const CustomButton = () => {
     <Wapper>
       {account.email ? (
         <Profile account={account}  setAccount={setAccount}  />
+       
       ) : (
         <Box>
           <LoginButton variant="contained" onClick={() => openUserDialog()}  style={{marginRight:"10px"}} >

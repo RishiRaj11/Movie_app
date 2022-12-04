@@ -57,7 +57,8 @@ const Login = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-      setAccount({...login});
+      setAccount({...login,...account});
+      
     console.log(login);
     setOpen(false);
   };

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Pagination, Grid, Box, styled } from "@mui/material";
+import { Pagination, Box, styled } from "@mui/material";
 import MovieCard from "./MovieCard";
 import { getMovies } from "../redux/actions/moviesActions";
 

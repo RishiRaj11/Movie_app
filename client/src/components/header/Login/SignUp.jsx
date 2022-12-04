@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { Typography, Box, styled } from "@mui/material";
 import { DataContext } from "../../context/DataProvider";
+
 const Container = styled(Box)`
   margin: 10%;
   text-align: center;
@@ -33,6 +35,7 @@ const Input = styled("input")({
 const SignUp = (props) => {
   const {account, setAccount } = useContext(DataContext);
   const { setOpen, setLoginSignup } = props;
+  const navigate=useNavigate();
   const intialState = {
     name: "",
     email: "",
@@ -58,10 +61,16 @@ const SignUp = (props) => {
     if (signup.password !== signup.cpassword) {
       setError({ color: "red", visibility: "visible" });
     } else {
-      setAccount({...signup});
+      setAccount({...signup,...account});
       console.log(signup);
       console.log(account);
       const response =await axios.post("http://localhost:5000/signup",signup);
+      if(signup.email && signup.userType==="Admin"){
+            navigate("/admin/login");
+      }
+      if(signup.email && signup.userType==="User"){
+        navigate("/user/login");
+      }
       console.log(response);
       setOpen(false);
     }
@@ -115,7 +124,7 @@ const SignUp = (props) => {
           </DivBox>
 
           <DivBox>
-            <StyledButton type="submit">LogIn</StyledButton>
+            <StyledButton type="submit">SignUp</StyledButton>
             <Typography style={{ color: "white" }}>
               Don't have an account ? please{" "}
               <span style={{ cursor: "pointer" }} onClick={signupHandler}>
