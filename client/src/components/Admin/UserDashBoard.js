@@ -4,7 +4,6 @@ import UserCard from "./UserCard";
 import axios from "axios";
 import { Box, styled } from "@mui/material";
 
-
 const Container = styled(Box)`
   display: flex;
   flex-wrap: wrap;
@@ -15,18 +14,23 @@ const Container = styled(Box)`
 const UserDashBoard = () => {
   const [user, setUser] = useState([]);
 
-
   useEffect(() => {
-    axios.get("http://localhost:5000/login").then((data) => setUser(data.data.data));
+    axios
+      .get("http://localhost:5000/login")
+      .then((data) => setUser(data.data.data));
   }, []);
 
   return (
     <>
-    <Container>
-      {user.map((item) => (
-        <UserCard item={item} key={item._id} />
-      ))}
-    </Container>
+      <Container>
+        {user
+          .filter((item) => {
+            return item.userType === "User";
+          })
+          .map((item) => (
+            <UserCard item={item} key={item._id} />
+          ))}
+      </Container>
     </>
   );
 };

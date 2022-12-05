@@ -32,10 +32,10 @@ export const addNewMovie = async (request, response) => {
   };
 
   export const updateMovie = async (request, response) => {
-    const {creatorEmail,id}=request.params;
+    const {creatorEmail,_id}=request.params;
     let movie;
     try {
-        movie = await Movies.findByIdAndUpdate(id, {
+        movie = await Movies.findByIdAndUpdate(_id, {
             title,
             year,
             genres,
@@ -52,6 +52,7 @@ export const addNewMovie = async (request, response) => {
             posterurl
         });
         await movie.save();
+        response.status(200).json({message:"Movie Update"});
     } catch (error) {
       response.status(500).json({ message: error });
     }
@@ -61,6 +62,7 @@ export const addNewMovie = async (request, response) => {
     const {creatorEmail,id}=request.params;
     try {
       const movies = await Movies.findByIdAndDelete(id);
+      response.status(200).json({message:"Successfull deleted"})
     } catch (error) { 
       response.status(500).json({ message: error });
     }

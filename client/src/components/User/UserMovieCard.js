@@ -1,5 +1,7 @@
 import React from "react";
-import { Card,Button, Box, Typography, styled } from "@mui/material";
+import { Card, Button, Box, Typography, styled } from "@mui/material";
+
+import axios from "axios";
 
 const StyledCard = styled(Card)`
   width:200px;
@@ -15,11 +17,19 @@ const Text = styled(Typography)`
   font-size: 14px;
   margin-top: 5px;
 `;
-const SubContainer=styled(Box)`
+const SubContainer = styled(Box)``;
 
-`;
+const UserMovieCard = ({ item, setUpdateToggle, setUpdate }) => {
+  const { _id } = item;
 
-const UserMovieCard = ({ item }) => {
+  const deleteHandler = async () => {
+    await axios.delete(`http://localhost:5000/user/deletemovie/${_id}`);
+  };
+  const updateHandler = () => {
+    setUpdateToggle(true);
+    setUpdate({ ...item });
+  };
+
   return (
     <StyledCard>
       <Box
@@ -27,7 +37,7 @@ const UserMovieCard = ({ item }) => {
         style={{ padding: "25px 15px", marginBottom: "10px" }}
       >
         <Image alt="Movie Poster" src={item.posterurl} />
-        <SubContainer >
+        <SubContainer>
           <Text style={{ fontWeight: 600, color: "#212121" }}>
             {item.title}
           </Text>
@@ -38,8 +48,26 @@ const UserMovieCard = ({ item }) => {
             IMDB Rating {item.imdbRating}
           </Text>
         </SubContainer>
-        <Button  style={{background:"rgb(29, 69, 107)",color:"white",marginRight:"10px"}} >Update</Button>
-        <Button  style={{background:"rgb(29, 69, 107)",color:"white",marginRight:"10px"}} >Delete</Button>
+        <Button
+          style={{
+            background: "rgb(29, 69, 107)",
+            color: "white",
+            marginRight: "10px",
+          }}
+          onClick={updateHandler}
+        >
+          Update
+        </Button>
+        <Button
+          style={{
+            background: "rgb(29, 69, 107)",
+            color: "white",
+            marginRight: "10px",
+          }}
+          onClick={deleteHandler}
+        >
+          Delete
+        </Button>
       </Box>
     </StyledCard>
   );

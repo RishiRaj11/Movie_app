@@ -11,7 +11,7 @@ const Container = styled(Box)`
   justify-content: space-around;
   padding: 20px;
 `;
-const AllCreatedMovie = () => {
+const AllCreatedMovie = ({setUpdateToggle,setUpdate}) => {
   //const [filteredMovie, setFilteredMovie] = useState([]);
   const { account } = useContext(DataContext);
 
@@ -27,7 +27,7 @@ const AllCreatedMovie = () => {
   return (
     <Container>
       {movies.filter((item)=>{return item.creatorEmail===account.email }).map((item) => (
-        <UserMovieCard item={item} />
+        <UserMovieCard item={item} setUpdateToggle={setUpdateToggle} setUpdate={setUpdate} />
       ))}
     </Container>
   );
