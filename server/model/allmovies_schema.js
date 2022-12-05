@@ -6,6 +6,7 @@ const moviesSchema = new mongoose.Schema([
       type: String,
       require: true,
       trim: true,
+      unique:true,
     },
     year:{
         type: String,
@@ -56,6 +57,11 @@ const moviesSchema = new mongoose.Schema([
       posterurl:{
         type: String,
         trim: true,
+      },
+      creatorEmail: {
+        type: String,        
+        trim: true,
+        lowercase: true,
       }
   },
 ]);
