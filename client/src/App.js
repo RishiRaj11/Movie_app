@@ -9,12 +9,11 @@ import AddMovie from "./components/User/AddMovie";
 
 const App = () => {
   const { account } = useContext(DataContext);
-  console.log("User data", account);
   return (
     <>
       <Router>
         <Header />
-        {/* <Routes>
+        <Routes>
           {account.email && account.userType === "Admin" ? (
             <Route path="/admin/login" element={<AdminLogin />} exact />
           ) : (
@@ -26,9 +25,9 @@ const App = () => {
           ) : (
             <Route path="/" element={<Home />} exact />
           )}
-        </Routes> */}
+        </Routes>
       </Router>
-      <AddMovie />
+      {/* <AddMovie /> */}
     </>
   );
 };

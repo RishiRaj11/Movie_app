@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Typography, Box, styled } from "@mui/material";
 import { DataContext } from "../../context/DataProvider";
@@ -33,18 +33,18 @@ const Input = styled("input")({
 });
 
 const SignUp = (props) => {
-  const {account, setAccount } = useContext(DataContext);
+  const { account, setAccount } = useContext(DataContext);
   const { setOpen, setLoginSignup } = props;
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const intialState = {
     name: "",
     email: "",
     password: "",
-    cpassword: ""
-    
+    cpassword: "",
   };
-  const [signup, setSignup] = useState({...account,...intialState});
+  const [signup, setSignup] = useState({ ...account, ...intialState });
   const [error, setError] = useState({ color: "red", visibility: "hidden" });
+  const [error1, setError1] = useState({ color: "red", visibility: "hidden" });
 
   const inputHandler = (e) => {
     setError({ color: "red", visibility: "hidden" });
@@ -61,17 +61,22 @@ const SignUp = (props) => {
     if (signup.password !== signup.cpassword) {
       setError({ color: "red", visibility: "visible" });
     } else {
-      setAccount({...signup,...account});
-      console.log(signup);
-      console.log(account);
-      const response =await axios.post("http://localhost:5000/signup",signup);
-      if(signup.email && signup.userType==="Admin"){
-            navigate("/admin/login");
+      const response = await axios.post("http://localhost:5000/signup", signup);
+
+      if (response.status === 201) {
+        setAccount({ ...signup, ...account });
+      } else if (response.status ===409) {
+        setError1({ color: "red", visibility: "visible" });
+        setSignup("");
       }
-      if(signup.email && signup.userType==="User"){
+      //console.log(response);
+      if (signup.email && signup.userType === "Admin") {
+        navigate("/admin/login");
+      }
+      if (signup.email && signup.userType === "User") {
         navigate("/user/login");
       }
-      console.log(response);
+      // console.log(response);
       setOpen(false);
     }
   };
@@ -126,12 +131,14 @@ const SignUp = (props) => {
           <DivBox>
             <StyledButton type="submit">SignUp</StyledButton>
             <Typography style={{ color: "white" }}>
-              Don't have an account ? please{" "}
+              if you have already account ? please{" "}
               <span style={{ cursor: "pointer" }} onClick={signupHandler}>
                 Login
               </span>
             </Typography>
           </DivBox>
+          <span style={error1}>Error :User has already account</span>
+          <br />
           <span style={error}>Error :password didn't match</span>
         </form>
       </InnerContainer>

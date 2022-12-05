@@ -1,8 +1,9 @@
-import React,{useState} from "react";
+import React,{useState,useContext} from "react";
+import axios from 'axios'
 import { Box, styled } from "@mui/material";
+import { DataContext } from "../context/DataProvider";
 const Container = styled(Box)`
   margin: 5%;
-  
   width: auto;
   height: auto;
 `;
@@ -33,14 +34,28 @@ const Input = styled("input")({
 
 
 const AddMovie = () => {
+    const [error, setError] = useState({ color: "red", visibility: "hidden" });
+    const {account}=useContext(DataContext);
     const [addNewMovie,setAddNewMovie]=useState({});
     const inputHandler = (e) => {
+      // console.log(account);
+      setError({ color: "red", visibility: "visible" });
         setAddNewMovie({...addNewMovie,[e.target.name]:e.target.value});
+        
     };
 
-    const submitHandler = (e) => {
+    const submitHandler = async(e) => {
         e.preventDefault();
-        console.log(addNewMovie);
+       // console.log(addNewMovie);
+       const newRecord= {...addNewMovie,creatorEmail:account.email}
+       try{
+        const response = await axios.post("http://localhost:5000/user/addmovie",newRecord);
+        console.log(response.data.status);
+        console.log(newRecord);
+       }catch(error){
+        console.log("error",error);
+       }
+
     };
   return (
     <Container>
@@ -203,9 +218,10 @@ const AddMovie = () => {
        </Box>
 
           <DivBox>
-            <StyledButton type="submit">Submit</StyledButton>
+            <StyledButton type="submit"  style={{background:"rgb(29, 69, 107)",color:"white",padding:"10px",fontSize:"large"}} >Submit</StyledButton>
           </DivBox>
         </form>
+        <span style={error}>Error :Existing movie</span>
       </InnerContainer>
     </Container>
   );
