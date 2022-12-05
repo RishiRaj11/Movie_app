@@ -63,16 +63,20 @@ const Login = (props) => {
       //console.log(data);
       const exist = data.find((element) => {
         return (
-          element.email === login.email && element.userType === login.userType && element.password===login.password
+          element.email === login.email &&
+          element.userType === login.userType &&
+          element.password === login.password
         );
       });
-      console.log(exist);
+      // console.log(exist);
 
       if (exist && login.userType === "Admin") {
         navigate("/admin/login");
+        setOpen(false);
         setAccount({ ...login, ...account });
       } else if (exist && login.userType === "User") {
         navigate("/user/login");
+        setOpen(false);
         setAccount({ ...login, ...account });
       } else if (true) {
         setError({ color: "red", visibility: "visible" });
@@ -121,7 +125,9 @@ const Login = (props) => {
               </span>
             </Typography>
           </DivBox>
-          <span style={error}>Error : account doesn't exist with this email & password</span>
+          <span style={error}>
+            Error : account doesn't exist with this email & password
+          </span>
         </form>
       </InnerContainer>
     </Container>

@@ -5,14 +5,17 @@ import AdminLogin from "./components/Admin/AdminLogin";
 import UserLogin from "./components/User/UserLogin";
 import Home from "./components/home/Home";
 import { DataContext } from "./components/context/DataProvider";
-import AddMovie from "./components/User/AddMovie";
 
 const App = () => {
   const { account } = useContext(DataContext);
+  let searchInput = "";
+  const searchFunction = (value) => {
+    searchInput = value;
+  };
   return (
     <>
       <Router>
-        <Header />
+        <Header searchFunction={searchFunction} />
         <Routes>
           {account.email && account.userType === "Admin" ? (
             <Route path="/admin/login" element={<AdminLogin />} exact />
@@ -27,7 +30,7 @@ const App = () => {
           )}
         </Routes>
       </Router>
-      {/* <AddMovie /> */}
+      
     </>
   );
 };

@@ -18,10 +18,10 @@ color:gray;
 padding-right:5px;
 padding-top:4px;
 `
-const Search=()=>{
+const Search=({searchFunction})=>{
     return(
         <SerachContainer>
-            <InputBox  placeholder="Search Movies..."/>
+            <InputBox  placeholder="Search Movies..." onChange={(e)=>{searchFunction(e.target.value)}}  />
             <SearchIconWrapper>
                 <SearchIcon />
             </SearchIconWrapper>

@@ -8,7 +8,7 @@ margin-top:75px;
 const Home = () => {
   return (
     <Container>
-        <MoviesList />
+        <MoviesList  />
     </Container>
   )
 }

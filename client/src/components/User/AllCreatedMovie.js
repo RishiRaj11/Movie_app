@@ -12,16 +12,12 @@ const Container = styled(Box)`
   padding: 20px;
 `;
 const AllCreatedMovie = () => {
-  const [filteredMovie, setFilteredMovie] = useState([]);
+  //const [filteredMovie, setFilteredMovie] = useState([]);
   const { account } = useContext(DataContext);
 
   const { movies } = useSelector((state) => state.getAllMovies); // this getProducts comming from redux store
 
- // console.log(movies[53].creatorEmail);
-  //console.log(account.email);
-  //console.log(filteredMovie);
   const dispatch = useDispatch();
-  //console.log(dispatch);
   useEffect(() => {
     dispatch(getMovies());
   }, [dispatch]);

@@ -13,9 +13,9 @@ const Container = styled(Box)`
 
 const MoviesList = () => {
   const { movies } = useSelector((state) => state.getAllMovies); // this getProducts comming from redux store
-  //console.log(movies[0]);
+   
   const dispatch = useDispatch();
-  //console.log(dispatch);
+
   useEffect(() => {
     dispatch(getMovies());
   }, [dispatch]);
